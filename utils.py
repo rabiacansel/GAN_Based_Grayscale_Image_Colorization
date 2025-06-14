@@ -21,7 +21,6 @@ class GrayscaleColorDataset(Dataset):
 
         assert len(self.gray_images) == len(self.color_images), \
 
-        # Tensor dönüşüm
         self.to_tensor = transforms.ToTensor()
 
     def __len__(self):
@@ -34,11 +33,9 @@ class GrayscaleColorDataset(Dataset):
         gray = Image.open(gray_path).convert("L")
         color = Image.open(color_path).convert("RGB")
 
-        # Ortak boyutlandırma
         gray = gray.resize((1024, 1024))
         color = color.resize((1024, 1024))
 
-        # --- Veri artırma işlemleri ---
         if random.random() < 0.5:
             gray = gray.transpose(Image.FLIP_LEFT_RIGHT)
             color = color.transpose(Image.FLIP_LEFT_RIGHT)
@@ -47,7 +44,6 @@ class GrayscaleColorDataset(Dataset):
         gray = gray.rotate(angle)
         color = color.rotate(angle) 
 
-        # Tensor'a çevir
         gray_tensor = self.to_tensor(gray)   # [1, H, W]
         color_tensor = self.to_tensor(color) # [3, H, W]
 
