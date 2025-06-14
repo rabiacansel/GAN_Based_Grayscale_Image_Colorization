@@ -23,7 +23,6 @@ class Discriminator(nn.Module):
         )
 
     def forward(self, gray, color):
-        # color: fake or real — tek bir görüntü
-        x = torch.cat([gray, color], dim=1)  # [B, 1+3, H, W] = [B, 4, 1024, 1024]
+        x = torch.cat([gray, color], dim=1)  
         x = self.features(x)
         return self.classifier(x)
